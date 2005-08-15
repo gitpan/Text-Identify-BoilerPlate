@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Text::Identify::BoilerPlate qw( rem_boilerplate );
+
+unless ($ARGV[0]) { die('You must specify at least one file\n') }
+}
+
+my @files = @ARGV;
+
+rem_boilerplate( \@files, { 
+                           min_dupl=>3,
+                           ignore_digits=>1,
+                           suffix=>'content'
+                          }
+               );
+
+
+__END__
+
+
+=head1 NAME
+
+rem-boilerplate-text
+
+=head1 VERSION
+
+Version 0.1
+
+=head1 SYNOPSIS
+
+Removes repeated text from a set of files.
+
+        > rem-boilerplate-text <list of files>
+
+E.g.
+
+        > rem-boilerplate-text intranet/txt/*.txt 
+
+Note that the system only works when more than one file is specified, 
+since boilerplate text is detected based on repetition across files.
+
+New files are written, with '.content' appended to the original filenames.
+
+
+
+
