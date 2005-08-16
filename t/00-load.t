@@ -3,7 +3,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-	use_ok( 'Text::BoilerPlate' );
+	use_ok( 'Text::Identify::BoilerPlate' );
 }
 
-diag( "Testing Text::BoilerPlate $Text::BoilerPlate::VERSION, Perl $], $^X" );
+diag( "Testing Text::Identify::BoilerPlate $Text::Identify::BoilerPlate::VERSION, Perl $], $^X" );

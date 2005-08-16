@@ -1,5 +1,10 @@
 Revision history for Text-Identify-BoilerPlate
 
-0.1    Date/time
+0.2    16.08.2005
+        * Expanded documentation
+        * Added options for digest-mode, logfile and limiting search to headers and footers
+        * Bug in tests 
+
+0.1    14.08.2005
         First version
 

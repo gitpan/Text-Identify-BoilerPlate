@@ -1,18 +1,22 @@
 #!/usr/bin/perl
 
+use lib '/hf/omilia/site/home/larsnyg/foot2/Text-Identify-BoilerPlate/lib/';
 use warnings;
 use strict;
 use Text::Identify::BoilerPlate qw( rem_boilerplate );
 
 unless ($ARGV[0]) { die('You must specify at least one file\n') }
-}
+
 
 my @files = @ARGV;
 
 rem_boilerplate( \@files, { 
-                           min_dupl=>3,
-                           ignore_digits=>1,
-                           suffix=>'content'
+                          min_dupl=>3,
+                          suffix=>'content',
+                          ignore_digits=>1,
+                          only_headers_and_footers=>1,
+                          digest=>0,
+                          log=>'/hom/larsnyg/foot2/text-identify-boilerplate.log'
                           }
                );
 
@@ -43,6 +47,7 @@ since boilerplate text is detected based on repetition across files.
 
 New files are written, with '.content' appended to the original filenames.
 
+=cut
 
 
 
