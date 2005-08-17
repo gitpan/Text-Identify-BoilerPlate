@@ -7,7 +7,7 @@ use base qw{ Exporter };
 use Hash::Merge qw{ merge };
 use Digest::MD5 qw{ md5 };
 
-our $VERSION   = '0.2';
+our $VERSION   = '0.3';
 our @EXPORT_OK = qw{ rem_boilerplate };
 
 my %config;
@@ -22,6 +22,22 @@ sub rem_boilerplate {
     _get_config($arg_ref);
 
     my @files = @$files;
+
+    print "MIN_DUPL: $config{'min_dupl'}\n";
+
+    if ($config{'min_dupl'} =~ s/\s*\%//) {
+        my $num_of_files = @files;
+        $config{'min_dupl'} =  int (
+                                    ($num_of_files * $config{'min_dupl'})
+                                    / 100
+                                   );
+        if ($config{'min_dupl'} < 2) { 
+            $config{'min_dupl'}=2; 
+        }
+    }
+
+    print "MIN_DUPL: $config{'min_dupl'}\n";
+    
 
     foreach my $file (@files) {
 
@@ -216,24 +232,37 @@ The options are:
 
 =over
 
-=item C<min_dupl> - the minimum number of thimes a line has to occur to
-be considered boilerplate (default: 3)
+=item C<min_dupl>
 
-=item C<ignore_digits> - lines only seperated by differences in digits
-will be considered duplicates (default: yes)
+The minimum number of thimes a line has to occur to
+be considered boilerplate (default: 3). Can be 
+either an integer or a percentage ('50%') of the number
+of files processed. Minimum value: 2.
 
-=item C<suffix> - added to the new files (default: 'content')
+=item C<ignore_digits>
 
-=item C<only_headers_and_footers> - Only sets consecutive lines of 
-duplicates at the start and end of documents are considered 
-boilerplate (default: yes)
+Lines only seperated by differences in digits
+will be considered duplicates (default: yes).
 
-=item C<digest> - lines will be replaced by a MD5 digest during duplicate
-compilation, saving memory (default: no)
+=item C<suffix>
 
-=item C<log> - name of the log file, where deleted lines are recorded; 
+Added to the new files (default: 'content').
+
+=item C<only_headers_and_footers>
+
+Only sets consecutive lines of duplicates at the start 
+and end of documents are considered boilerplate (default: yes).
+
+=item C<digest>
+
+Lines will be replaced by a MD5 digest during duplicate
+compilation, saving memory (default: no).
+
+=item C<log>
+
+Nname of the log file, where deleted lines are recorded; 
 if set to false, no log will be created (default: 
-'./text-identify-boilerplate.log')
+'./text-identify-boilerplate.log').
 
 =back
 
@@ -253,8 +282,6 @@ C<bug-text-identify-boilerplate@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Text-Identify-BoilerPlate>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
-
-=head1 ACKNOWLEDGEMENTS
 
 =head1 COPYRIGHT & LICENSE
 

@@ -11,7 +11,7 @@ WriteMakefile(
               PL_FILES            => {},
               PREREQ_PM => {
                             'Test::More' => 0,
-                            'Hash::Merge' => 0,
+                            'Getopt::Mixed' => 0,
                            },
               dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
               clean               => { FILES => 'Text-Identify-BoilerPlate-*' },
