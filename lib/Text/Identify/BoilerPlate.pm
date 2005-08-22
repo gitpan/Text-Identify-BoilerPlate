@@ -4,10 +4,9 @@ use warnings;
 use strict;
 use Carp;
 use base qw{ Exporter };
-use Hash::Merge qw{ merge };
 use Digest::MD5 qw{ md5 };
 
-our $VERSION   = '0.3';
+our $VERSION   = '0.3.1';
 our @EXPORT_OK = qw{ rem_boilerplate };
 
 my %config;
@@ -172,7 +171,7 @@ CUT:
 
 sub _get_config {
 
-    my %config_default = (
+    %config = (
         min_dupl                 => 3,
         suffix                   => 'content',
         ignore_digits            => 1,
@@ -184,8 +183,12 @@ sub _get_config {
     my $arg_ref    = $_[0];
     my %config_arg = %$arg_ref;
 
-    Hash::Merge::set_behavior('RIGHT_PRECEDENT');
-    %config = %{ merge( \%config_default, \%config_arg ) };
+    # merge hashes
+    foreach my $opt (keys %config) {
+        if (defined $config_arg{$opt}) {
+            $config{$opt}=$config_arg{$opt};
+        }
+    }
 
     if ( $config{'log'} ) {
         open $LOG_FILE, '>', $config{'log'}
@@ -206,7 +209,7 @@ Text::Identify::BoilerPlate - Remove repeated text
 
 =head1 VERSION
 
-Version 0.2
+Version 0.3.1
 
 
 =head1 SYNOPSIS

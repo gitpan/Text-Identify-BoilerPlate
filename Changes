@@ -1,5 +1,8 @@
 Revision history for Text-Identify-BoilerPlate
 
+0.3.1  18.08.2005
+        * _really_ removed dependency on Hash::Merge    
+
 0.3    18.08.2005
         * Removed dependency on non-standard Hash::Merge
         * min_dupl can be percentage of number of files
